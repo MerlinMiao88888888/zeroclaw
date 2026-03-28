@@ -327,6 +327,7 @@ struct InterruptOnNewMessageConfig {
     discord: bool,
     mattermost: bool,
     matrix: bool,
+    whatsapp: bool,
 }
 
 impl InterruptOnNewMessageConfig {
@@ -337,6 +338,7 @@ impl InterruptOnNewMessageConfig {
             "discord" => self.discord,
             "mattermost" => self.mattermost,
             "matrix" => self.matrix,
+            "whatsapp" => self.whatsapp,
             _ => false,
         }
     }
@@ -5397,6 +5399,11 @@ pub async fn start_channels(config: Config) -> Result<()> {
         .matrix
         .as_ref()
         .is_some_and(|mx| mx.interrupt_on_new_message);
+    let interrupt_on_new_message_whatsapp = config
+        .channels_config
+        .whatsapp
+        .as_ref()
+        .is_some_and(|wa| wa.interrupt_on_new_message);
 
     let runtime_ctx = Arc::new(ChannelRuntimeContext {
         channels_by_name,
@@ -5428,6 +5435,7 @@ pub async fn start_channels(config: Config) -> Result<()> {
             discord: interrupt_on_new_message_discord,
             mattermost: interrupt_on_new_message_mattermost,
             matrix: interrupt_on_new_message_matrix,
+            whatsapp: interrupt_on_new_message_whatsapp,
         },
         multimodal: config.multimodal.clone(),
         media_pipeline: config.media_pipeline.clone(),
@@ -5867,6 +5875,7 @@ mod tests {
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -5989,6 +5998,7 @@ mod tests {
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -6067,6 +6077,7 @@ mod tests {
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -6164,6 +6175,7 @@ mod tests {
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -6748,6 +6760,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             non_cli_excluded_tools: Arc::new(Vec::new()),
             autonomy_level: AutonomyLevel::default(),
@@ -6836,6 +6849,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             non_cli_excluded_tools: Arc::new(Vec::new()),
             autonomy_level: AutonomyLevel::default(),
@@ -6938,6 +6952,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -7025,6 +7040,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -7122,6 +7138,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -7240,6 +7257,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -7339,6 +7357,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -7453,6 +7472,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -7552,6 +7572,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -7644,6 +7665,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -7862,6 +7884,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -7972,6 +7995,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -8101,6 +8125,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             ack_reactions: true,
             show_tool_calls: true,
@@ -8227,6 +8252,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -8331,6 +8357,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -8418,6 +8445,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -9208,6 +9236,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -9347,6 +9376,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -9529,6 +9559,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -9644,6 +9675,7 @@ BTC is currently around $65,000 based on latest tool output."#
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -10229,6 +10261,7 @@ This is an example JSON object for profile settings."#;
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -10323,6 +10356,7 @@ This is an example JSON object for profile settings."#;
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -10451,6 +10485,7 @@ This is an example JSON object for profile settings."#;
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             hooks: None,
@@ -10623,6 +10658,7 @@ This is an example JSON object for profile settings."#;
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -10741,6 +10777,7 @@ This is an example JSON object for profile settings."#;
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -10851,6 +10888,7 @@ This is an example JSON object for profile settings."#;
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -10981,6 +11019,7 @@ This is an example JSON object for profile settings."#;
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),
@@ -11121,6 +11160,7 @@ This is an example JSON object for profile settings."#;
             discord: false,
             mattermost: true,
             matrix: false,
+            whatsapp: false,
         };
         assert!(cfg.enabled_for_channel("mattermost"));
     }
@@ -11133,6 +11173,7 @@ This is an example JSON object for profile settings."#;
             discord: false,
             mattermost: false,
             matrix: false,
+            whatsapp: false,
         };
         assert!(!cfg.enabled_for_channel("mattermost"));
     }
@@ -11145,6 +11186,7 @@ This is an example JSON object for profile settings."#;
             discord: true,
             mattermost: false,
             matrix: false,
+            whatsapp: false,
         };
         assert!(cfg.enabled_for_channel("discord"));
     }
@@ -11157,6 +11199,7 @@ This is an example JSON object for profile settings."#;
             discord: false,
             mattermost: false,
             matrix: false,
+            whatsapp: false,
         };
         assert!(!cfg.enabled_for_channel("discord"));
     }
@@ -11252,6 +11295,7 @@ This is an example JSON object for profile settings."#;
                 discord: false,
                 mattermost: false,
                 matrix: false,
+                whatsapp: false,
             },
             multimodal: crate::config::MultimodalConfig::default(),
             media_pipeline: crate::config::MediaPipelineConfig::default(),

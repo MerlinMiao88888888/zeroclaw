@@ -4449,6 +4449,7 @@ fn setup_channels() -> Result<ChannelsConfig> {
                         self_chat_mode: false,
                         dm_mention_patterns: vec![],
                         group_mention_patterns: vec![],
+                        interrupt_on_new_message: false,
                         proxy_url: None,
                     });
 
@@ -4557,6 +4558,7 @@ fn setup_channels() -> Result<ChannelsConfig> {
                     self_chat_mode: false,
                     dm_mention_patterns: vec![],
                     group_mention_patterns: vec![],
+                    interrupt_on_new_message: false,
                     proxy_url: None,
                 });
             }
