@@ -1,6 +1,6 @@
 use crate::cron::Schedule;
 use anyhow::{Context, Result};
-use chrono::{DateTime, Duration as ChronoDuration, Utc};
+use chrono::{DateTime, Duration as ChronoDuration, Local, TimeZone, Utc};
 use cron::Schedule as CronExprSchedule;
 use std::str::FromStr;
 
@@ -20,9 +20,17 @@ pub fn next_run_for_schedule(schedule: &Schedule, from: DateTime<Utc>) -> Result
                 })?;
                 Ok(next_local.with_timezone(&Utc))
             } else {
-                cron.after(&from)
+                // When no timezone is specified, use the system's local timezone
+                // instead of UTC, so that cron expressions like "0 9 * * *" fire
+                // at 9 AM local time, not 9 AM UTC.
+                let local_now = Local::now();
+                let naive_local = local_now.naive_local();
+                let next_local = cron
+                    .from_naive_local(&naive_local)
                     .next()
-                    .ok_or_else(|| anyhow::anyhow!("No future occurrence for expression: {expr}"))
+                    .ok_or_else(|| anyhow::anyhow!("No future occurrence for expression: {expr}"))?;
+                // next_local is a DateTime<Utc> because DateTime<Local> derefs to DateTime<Utc>
+                Ok(*next_local)
             }
         }
         Schedule::At { at } => Ok(*at),
